@@ -14,9 +14,10 @@ function handleFormField(){
         var shenpiTab = Xrm.Page.ui.tabs.get(tabstring[0]);
         var mainTab = Xrm.Page.ui.tabs.get(tabstring[1]);
         var currentLoginUserId = Xrm.Page.context.getUserId();
+        var currentLoginUserName = Xrm.Page.context.getUserName();
         var currentShenpiUserId = Xrm.Page.getAttribute('new_gz_shren').getValue()[0].id;
-        if(currentShenpiUserId != currentLoginUserId){
-            //审批人与当前登陆用户不一致，锁定tab中的所有控件
+        if(currentShenpiUserId != currentLoginUserId || currentLoginUserName != 'crm'){
+            //审批人与当前登陆用户不一致或者不为管理员账号，锁定tab中的所有控件
             mainTab.sections.forEach(function(section,i){
                 section.controls.forEach(function(control,i){
                     control.setDisable(true);
