@@ -5,6 +5,8 @@ var currentNode = Xrm.Page.getAttribute("new_gz_lczd_currentnode").getText();
 
 function hideTabsAndSections(){
     var lixiangRef = Xrm.Page.getAttribute("new_gz_yylxxm").getValue();
+    var isZhongbiao = Xrm.Page.getAttribute("new_gzfield_isbiddingsuccess").getText();
+    //以下代码判断引用的立项是否为空，从而隐藏其他tab
     if(lixiangRef == null){
         Xrm.Page.ui.tabs.get(formTabs[1]).setVisible(false);
         Xrm.Page.ui.tabs.get(formTabs[2]).setVisible(false);
@@ -12,10 +14,17 @@ function hideTabsAndSections(){
         Xrm.Page.ui.tabs.get(formTabs[1]).setVisible(true);
         Xrm.Page.ui.tabs.get(formTabs[2]).setVisible(true);
     }
+    //以下代码判断状态，从而用来判断是否隐藏审批tab
     if(statuscodetext === "草稿"){
         Xrm.Page.ui.tabs.get(formTabs[2]).setVisible(false);
     }else{
         Xrm.Page.ui.tabs.get(formTabs[2]).setVisible(true);
+    }
+    //以下代码判断是否中标，从而隐藏合同grid
+    if(isZhongbiao != "是"){
+        Xrm.Page.ui.tabs.get(formTabs[2]).sections.get("section_grid_hetong").setVisible(false);
+    }else{
+        Xrm.Page.ui.tabs.get(formTabs[2]).sections.get("section_grid_hetong").setVisible(true);
     }
 }
 
